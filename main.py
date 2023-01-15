@@ -66,7 +66,7 @@ class Grid(GridLayout):
         self.rows=2
         self.btn = Button(text ="Take a Picture")
         self.add_widget(self.btn)
-        self.btn.bind(on_press = TakePictureApp().build())
+        #self.btn.bind(on_press = TakePictureApp().build())
         self.btn2 = Button(text ="Choose Existing")
         self.add_widget(self.btn2)
 
