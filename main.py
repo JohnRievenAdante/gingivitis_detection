@@ -70,12 +70,13 @@ class Grid(GridLayout):
     def __init__(self,**kwargs):
         super(Grid,self).__init__(**kwargs)
         self.rows=2
+"""
         self.btn = Button(text ="Take a Picture")
         self.add_widget(self.btn)
         #self.btn.bind(on_press = TakePictureApp().build())
         self.btn2 = Button(text ="Choose Existing")
         self.add_widget(self.btn2)
-"""
+
     def open_camera(self, *args):
         self.layout = BoxLayout(orientation='vertical')
         self.camera = Camera(resolution=(640, 480))
