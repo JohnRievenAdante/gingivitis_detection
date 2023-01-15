@@ -5,6 +5,21 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.button import Button
 from kivy.uix.image import Image
 from kivy.uix.filechooser import FileChooserIconView
+from kivy.uix.boxlayout import BoxLayout
+"""
+class TakePictureApp(App):
+    def build(self):
+        self.layout = BoxLayout(orientation='vertical')
+        self.camera = Camera(resolution=(640, 480))
+        self.camera.play = True
+        self.take_picture_button = Button(text = "Take Picture")
+        self.take_picture_button.bind(on_press = self.take_picture)
+        self.layout.add_widget(self.camera)
+        self.layout.add_widget(self.take_picture_button)
+        return self.layout
+    
+    def take_picture(self, *args):
+        self.camera.export_to_png("picture.png")
 
 class GalleryApp(App):
     def build(self):
@@ -45,16 +60,7 @@ class ScreenManagementApp(App):
         self.screen_manager.add_widget(self.another_screen)
         return self.screen_manager
 
-class TakePictureApp(App):
-    def build(self):
-        self.camera = Camera(resolution=(640, 480))
-        self.camera.play = True
-        self.take_picture_button = Button(text = "Take Picture")
-        self.take_picture_button.bind(on_press = self.take_picture)
-        return self.camera
-    
-    def take_picture(self, *args):
-        self.camera.export_to_png("picture.png")
+"""
 
 class Main(App):
     def build(self):
@@ -69,8 +75,21 @@ class Grid(GridLayout):
         #self.btn.bind(on_press = TakePictureApp().build())
         self.btn2 = Button(text ="Choose Existing")
         self.add_widget(self.btn2)
+"""
+    def open_camera(self, *args):
+        self.layout = BoxLayout(orientation='vertical')
+        self.camera = Camera(resolution=(640, 480))
+        self.camera.play = True
+        self.take_picture_button = Button(text = "Take Picture")
+        self.take_picture_button.bind(on_press = self.take_picture)
+        self.layout.add_widget(self.camera)
+        self.layout.add_widget(self.take_picture_button)
+        return self.layout
+    
+    def take_picture(self, *args):
+        self.camera.export_to_png("picture.png")
 
-
+"""
 
 if __name__ == '__main__':
     Main().run()
