@@ -60,11 +60,11 @@ class MainScreen(Screen,FloatLayout):
     
     def take_picture(self, *args):
         timestr = time.strftime("%Y%m%d_%H%M%S")
-        self.camera.export_to_png("/DCIM/"+"IMG_{}.png".format(timestr))
+        self.camera.export_to_png("/sdcard/"+"IMG_{}.png".format(timestr))
         self.camera.play = False
         self.remove_widget(self.camera)
         self.remove_widget(self.take_picture_button)
-        self.image.source = str("/DCIM/"+"IMG_{}.png".format(timestr))
+        self.image.source = str("/sdcard/"+"IMG_{}.png".format(timestr))
         self.add_widget(self.image)
         self.confirm=Label(text = "Use this image?",pos_hint={"y":0.43})
         self.add_widget(self.confirm)
@@ -123,11 +123,11 @@ class DeveloperScreen(Screen,FloatLayout):
     def take_picture(self, *args):
         self.remove_widget(self.confirm)
         timestr = time.strftime("%Y%m%d_%H%M%S")
-        self.camera.export_to_png("/DCIM/"+"IMG_{}.png".format(timestr))
+        self.camera.export_to_png("/sdcard/"+"IMG_{}.png".format(timestr))
         self.camera.play = False
         self.remove_widget(self.camera)
         self.remove_widget(self.take_picture_button)
-        self.image.source = str("/DCIM/"+"IMG_{}.png".format(timestr))
+        self.image.source = str("/sdcard/"+"IMG_{}.png".format(timestr))
         self.add_widget(self.image)
         self.confirm=Label(text = "Use this image?",pos_hint={"y":0.43})
         self.add_widget(self.confirm)
@@ -216,7 +216,7 @@ class DeveloperScreen(Screen,FloatLayout):
         img = cv2.imread(filename)
         ORANGE_MIN = np.array([3, 139, 82],np.uint8)
         ORANGE_MAX = np.array([6, 255, 255],np.uint8)
-        print(filename)
+        
         hsv_img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
         cv2.imwrite('res1.jpg', hsv_img)
         
@@ -269,7 +269,7 @@ class DevGalleryScreen(Screen,FloatLayout):
 
     def gallery(self,*args):
         self.image = Image()
-        self.filechooser = FileChooserListView(size_hint=(1,0.8),pos_hint={"top":0.9})
+        self.filechooser = FileChooserListView(size_hint=(1,0.8),pos_hint={"top":0.9},rootpath='/storage/emulated/0/')
         self.filechooser.bind(on_selection=lambda x: self.selected(self.filechooser.selection))
  
         self.open_btn = Button(text='open', size_hint=(0.35,0.05),pos_hint={"x":0.10,"top":0.07})
@@ -314,7 +314,7 @@ class AnotherScreen(Screen,FloatLayout):
 
     def gallery(self,*args):
         self.image = Image()
-        self.filechooser = FileChooserListView(size_hint=(1,0.8),pos_hint={"top":0.9})
+        self.filechooser = FileChooserListView(size_hint=(1,0.8),pos_hint={"top":0.9},rootpath='/storage/emulated/0/')
         self.filechooser.bind(on_selection=lambda x: self.selected(self.filechooser.selection))
  
         self.open_btn = Button(text='open', size_hint=(0.35,0.05),pos_hint={"x":0.10,"top":0.07})
@@ -349,8 +349,7 @@ class Main(App):
         request_permissions([
             Permission.CAMERA,
             Permission.WRITE_EXTERNAL_STORAGE,
-            Permission.READ_EXTERNAL_STORAGE,
-            Permission.MANAGE_EXTERNAL_STORAGE
+            Permission.READ_EXTERNAL_STORAGE
         ])
         
         self.screen_manager = ScreenManager()
