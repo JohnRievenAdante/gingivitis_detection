@@ -60,11 +60,11 @@ class MainScreen(Screen,FloatLayout):
     
     def take_picture(self, *args):
         timestr = time.strftime("%Y%m%d_%H%M%S")
-        self.camera.export_to_png("/sdcard/"+"IMG_{}.png".format(timestr))
+        self.camera.export_to_png("/sdcard/IMG_{}.png".format(timestr))
         self.camera.play = False
         self.remove_widget(self.camera)
         self.remove_widget(self.take_picture_button)
-        self.image.source = str("/sdcard/"+"IMG_{}.png".format(timestr))
+        self.image.source = str("/sdcard/IMG_{}.png".format(timestr))
         self.add_widget(self.image)
         self.confirm=Label(text = "Use this image?",pos_hint={"y":0.43})
         self.add_widget(self.confirm)
@@ -123,11 +123,11 @@ class DeveloperScreen(Screen,FloatLayout):
     def take_picture(self, *args):
         self.remove_widget(self.confirm)
         timestr = time.strftime("%Y%m%d_%H%M%S")
-        self.camera.export_to_png("/sdcard/"+"IMG_{}.png".format(timestr))
+        self.camera.export_to_png("/sdcard/IMG_{}.png".format(timestr))
         self.camera.play = False
         self.remove_widget(self.camera)
         self.remove_widget(self.take_picture_button)
-        self.image.source = str("/sdcard/"+"IMG_{}.png".format(timestr))
+        self.image.source = str("/sdcard/IMG_{}.png".format(timestr))
         self.add_widget(self.image)
         self.confirm=Label(text = "Use this image?",pos_hint={"y":0.43})
         self.add_widget(self.confirm)
