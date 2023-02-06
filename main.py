@@ -123,11 +123,11 @@ class DeveloperScreen(Screen,FloatLayout):
     def take_picture(self, *args):
         self.remove_widget(self.confirm)
         timestr = time.strftime("%Y%m%d_%H%M%S")
-        self.camera.export_to_png("IMG_{}.png".format(timestr))
+        self.camera.export_to_png("/DCIM/"+"IMG_{}.png".format(timestr))
         self.camera.play = False
         self.remove_widget(self.camera)
         self.remove_widget(self.take_picture_button)
-        self.image.source = str("IMG_{}.png".format(timestr))
+        self.image.source = str("/DCIM/"+"IMG_{}.png".format(timestr))
         self.add_widget(self.image)
         self.confirm=Label(text = "Use this image?",pos_hint={"y":0.43})
         self.add_widget(self.confirm)
@@ -345,13 +345,13 @@ class AnotherScreen(Screen,FloatLayout):
 
 class Main(App):
     def build(self):
-        
+        loadingscreen.hide_loading_screen()
         request_permissions([
             Permission.CAMERA,
             Permission.WRITE_EXTERNAL_STORAGE,
             Permission.READ_EXTERNAL_STORAGE
         ])
-        loadingscreen.hide_loading_screen()
+        
         self.screen_manager = ScreenManager()
         self.main_screen = MainScreen(name="main")
         self.another_screen = AnotherScreen(name="another")
