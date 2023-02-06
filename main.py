@@ -1,4 +1,5 @@
 from kivy.app import App
+from kivymd.app import MDApp
 from kivy.uix.camera import Camera
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -13,7 +14,7 @@ import cv2
 import numpy as np
 from android import loadingscreen
 from android.permissions import request_permissions, Permission
-from kivymd.uix.filemanager import MDFileManager 
+from kivymd.uix.filemanager import MDFileManager
 from kivy.graphics import Rotate, PushMatrix, PopMatrix
 from android.storage import primary_external_storage_path
 
@@ -344,7 +345,7 @@ class AnotherScreen(Screen,FloatLayout):
         self.take_another.bind(on_press = self.check)
         self.add_widget(self.take_another)
 
-class Main(App):
+class Main(MDApp):
     def build(self):
         loadingscreen.hide_loading_screen()
         request_permissions([
