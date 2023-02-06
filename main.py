@@ -13,10 +13,9 @@ import cv2
 import numpy as np
 from android import loadingscreen
 from android.permissions import request_permissions, Permission
-
+from kivymd.uix.filemanager import MDFileManager 
 from kivy.graphics import Rotate, PushMatrix, PopMatrix
-
-
+from android.storage import primary_external_storage_path
 
 
 class MainScreen(Screen,FloatLayout):
@@ -60,11 +59,11 @@ class MainScreen(Screen,FloatLayout):
     
     def take_picture(self, *args):
         timestr = time.strftime("%Y%m%d_%H%M%S")
-        self.camera.export_to_png("/storage/00E9-16E6/Pictures/IMG_{}.png".format(timestr))
+        self.camera.export_to_png("/sdcard/IMG_{}.png".format(timestr))
         self.camera.play = False
         self.remove_widget(self.camera)
         self.remove_widget(self.take_picture_button)
-        self.image.source = str("/storage/00E9-16E6/Pictures/IMG_{}.png".format(timestr))
+        self.image.source = str("/sdcard/IMG_{}.png".format(timestr))
         self.add_widget(self.image)
         self.confirm=Label(text = "Use this image?",pos_hint={"y":0.43})
         self.add_widget(self.confirm)
@@ -123,11 +122,11 @@ class DeveloperScreen(Screen,FloatLayout):
     def take_picture(self, *args):
         self.remove_widget(self.confirm)
         timestr = time.strftime("%Y%m%d_%H%M%S")
-        self.camera.export_to_png("/storage/00E9-16E6/Pictures/IMG_{}.png".format(timestr))
+        self.camera.export_to_png("/sdcard/IMG_{}.png".format(timestr))
         self.camera.play = False
         self.remove_widget(self.camera)
         self.remove_widget(self.take_picture_button)
-        self.image.source = str("/storage/00E9-16E6/Pictures/IMG_{}.png".format(timestr))
+        self.image.source = str("/sdcard/IMG_{}.png".format(timestr))
         self.add_widget(self.image)
         self.confirm=Label(text = "Use this image?",pos_hint={"y":0.43})
         self.add_widget(self.confirm)
@@ -269,9 +268,11 @@ class DevGalleryScreen(Screen,FloatLayout):
 
     def gallery(self,*args):
         self.image = Image()
-        self.filechooser = FileChooserListView(size_hint=(1,0.8),pos_hint={"top":0.9},rootpath='/storage/00E9-16E6/')
+        #self.file_manager = MDFileManager(
+        #        exit_manager=self.exit_manager, select_path=self.select_path)
+        self.filechooser = MDFileManager(size_hint=(1,0.8),pos_hint={"top":0.9})
         self.filechooser.bind(on_selection=lambda x: self.selected(self.filechooser.selection))
- 
+        self.filechooser.show(primary_external_storage_path())
         self.open_btn = Button(text='open', size_hint=(0.35,0.05),pos_hint={"x":0.10,"top":0.07})
         self.open_btn.bind(on_release=lambda x: self.open(self.filechooser.path, self.filechooser.selection))
         self.back_to_main=Button(text='Back to main menu', size_hint=[0.35,0.05],pos_hint={"x":0.55,"top":0.07})
@@ -314,9 +315,9 @@ class AnotherScreen(Screen,FloatLayout):
 
     def gallery(self,*args):
         self.image = Image()
-        self.filechooser = FileChooserListView(size_hint=(1,0.8),pos_hint={"top":0.9},rootpath='/storage/00E9-16E6/')
+        self.filechooser = MDFileManager(size_hint=(1,0.8),pos_hint={"top":0.9})
         self.filechooser.bind(on_selection=lambda x: self.selected(self.filechooser.selection))
- 
+        self.filechooser.show(primary_external_storage_path())
         self.open_btn = Button(text='open', size_hint=(0.35,0.05),pos_hint={"x":0.10,"top":0.07})
         self.open_btn.bind(on_release=lambda x: self.open(self.filechooser.path, self.filechooser.selection))
         self.back_to_main=Button(text='Back to main menu', size_hint=[0.35,0.05],pos_hint={"x":0.55,"top":0.07})
