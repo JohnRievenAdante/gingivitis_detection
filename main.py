@@ -328,21 +328,10 @@ class DevGalleryScreen(Screen,FloatLayout):
 class AnotherScreen(Screen,FloatLayout):
     def __init__(self, **kwargs):
         super(AnotherScreen,self).__init__(**kwargs)
-        self.manager_open = False
-        self.manager = None
-        self.file_manager_open()
-        #self.gallery()
+        self.gallery()
 
-    def file_manager_open(self):
-        if not self.manager:
-            self.manager = ModalView(size_hint=(1, 1), auto_dismiss=False)
-            self.file_manager = MDFileManager(
-                exit_manager=self.exit_manager, select_path=self.select_path)
-            self.manager.add_widget(self.file_manager)
-            self.file_manager.show('/')  # output manager to the screen
-        self.manager_open = True
-        self.manager.open()
-        
+    
+
     def switch_screen(self, *args):
         self.manager.current = "main"
 
@@ -365,6 +354,7 @@ class AnotherScreen(Screen,FloatLayout):
 
         self.add_widget(self.back_to_main)
         self.add_widget(self.filechooser)
+        self.filechooser.show('/')
         self.add_widget(self.open_btn)
 
     def select_path(self, path):
