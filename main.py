@@ -330,8 +330,6 @@ class AnotherScreen(Screen,FloatLayout):
         super(AnotherScreen,self).__init__(**kwargs)
         self.gallery()
 
-    
-
     def switch_screen(self, *args):
         self.manager.current = "main"
 
@@ -353,7 +351,7 @@ class AnotherScreen(Screen,FloatLayout):
         self.back_to_main.bind(on_press=self.switch_screen)
 
         self.add_widget(self.back_to_main)
-        self.add_widget(self.filechooser)
+        #self.add_widget(self.filechooser)
         self.filechooser.show('/')
         self.add_widget(self.open_btn)
 
@@ -377,8 +375,6 @@ class AnotherScreen(Screen,FloatLayout):
 
     def exit_manager(self, *args):
         '''Called when the user reaches the root of the directory tree.'''
-
-        self.manager.dismiss()
         self.remove_widget(self.filechooser)
 
     def open(self, path, filename):
