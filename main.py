@@ -1,4 +1,5 @@
 from kivy.app import App
+from kivymd.app import MDApp
 from kivy.uix.camera import Camera
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -15,7 +16,7 @@ from android import loadingscreen
 from android.permissions import request_permissions, Permission
 from kivymd.uix.filemanager import MDFileManager 
 from kivy.graphics import Rotate, PushMatrix, PopMatrix
-
+from kivymd.toast import toast
 
 
 class MainScreen(Screen,FloatLayout):
@@ -268,18 +269,43 @@ class DevGalleryScreen(Screen,FloatLayout):
 
     def gallery(self,*args):
         self.image = Image()
-        self.filechooser = FileChooserIconView(size_hint=(1,0.8),pos_hint={"top":0.9},rootpath='/storage/emulated/0/')
-        self.filechooser.bind(on_selection=lambda x: self.selected(self.filechooser.selection))
+        self.filechooser = MDFileManager(
+                exit_manager=self.exit_manager, select_path=self.select_path)#(size_hint=(1,0.8),pos_hint={"top":0.9},rootpath='/storage/emulated/0/')
+        #self.filechooser.bind(on_selection=lambda x: self.selected(self.filechooser.selection))
  
         self.open_btn = Button(text='open', size_hint=(0.35,0.05),pos_hint={"x":0.10,"top":0.07})
-        self.open_btn.bind(on_release=lambda x: self.open(self.filechooser.path, self.filechooser.selection))
+        #self.open_btn.bind(on_release=lambda x: self.open(self.filechooser.path, self.filechooser.selection))
         self.back_to_main=Button(text='Back to main menu', size_hint=[0.35,0.05],pos_hint={"x":0.55,"top":0.07})
         self.back_to_main.bind(on_press=self.switch_screen)
 
         self.add_widget(self.back_to_main)
         self.add_widget(self.filechooser)
         self.add_widget(self.open_btn)
-    
+
+    def select_path(self, path):
+        self.image.source = str(path[0])
+        self.add_widget(self.image)
+        self.confirm=Label(text = "Use this image?",pos_hint={"y":0.43})
+        self.add_widget(self.confirm)
+        self.remove_widget(self.filechooser)
+        self.remove_widget(self.open_btn)
+        self.remove_widget(self.back_to_main)
+        self.use_image = Button(text = "Confirm",size_hint=[0.35,0.05],pos_hint={"x":0.55,"top":0.07})
+
+        #bind to image processing
+        self.use_image.bind(on_press =lambda *args: DeveloperScreen.image_process(self=self,filename=self.image.source,isdev=True))
+        self.add_widget(self.use_image)
+        self.take_another = Button(text = "Retry",size_hint=[0.35,0.05],pos_hint={"x":0.10,"top":0.07})
+        self.take_another.bind(on_press = self.check)
+        self.add_widget(self.take_another)
+        toast(path)
+
+    def exit_manager(self, *args):
+        '''Called when the user reaches the root of the directory tree.'''
+
+        self.manager.dismiss()
+        self.remove_widget(self.filechooser)
+
     def open(self, path, filename):
         self.image.source = str(filename[0])
         self.add_widget(self.image)
@@ -313,18 +339,43 @@ class AnotherScreen(Screen,FloatLayout):
 
     def gallery(self,*args):
         self.image = Image()
-        self.filechooser = FileChooserIconView(size_hint=(1,0.8),pos_hint={"top":0.9},rootpath='/storage/emulated/0/')
-        self.filechooser.bind(on_selection=lambda x: self.selected(self.filechooser.selection))
+        self.filechooser = self.filechooser = MDFileManager(
+                exit_manager=self.exit_manager, select_path=self.select_path)#(size_hint=(1,0.8),pos_hint={"top":0.9},rootpath='/storage/emulated/0/')
+        #self.filechooser.bind(on_selection=lambda x: self.selected(self.filechooser.selection))
  
         self.open_btn = Button(text='open', size_hint=(0.35,0.05),pos_hint={"x":0.10,"top":0.07})
-        self.open_btn.bind(on_release=lambda x: self.open(self.filechooser.path, self.filechooser.selection))
+        #self.open_btn.bind(on_release=lambda x: self.open(self.filechooser.path, self.filechooser.selection))
         self.back_to_main=Button(text='Back to main menu', size_hint=[0.35,0.05],pos_hint={"x":0.55,"top":0.07})
         self.back_to_main.bind(on_press=self.switch_screen)
 
         self.add_widget(self.back_to_main)
         self.add_widget(self.filechooser)
         self.add_widget(self.open_btn)
-    
+
+    def select_path(self, path):
+        self.image.source = str(path[0])
+        self.add_widget(self.image)
+        self.confirm=Label(text = "Use this image?",pos_hint={"y":0.43})
+        self.add_widget(self.confirm)
+        self.remove_widget(self.filechooser)
+        self.remove_widget(self.open_btn)
+        self.remove_widget(self.back_to_main)
+        self.use_image = Button(text = "Confirm",size_hint=[0.35,0.05],pos_hint={"x":0.55,"top":0.07})
+
+        #bind to image processing
+        self.use_image.bind(on_press =lambda *args: DeveloperScreen.image_process(self=self,filename=self.image.source,isdev=False))
+        self.add_widget(self.use_image)
+        self.take_another = Button(text = "Retry",size_hint=[0.35,0.05],pos_hint={"x":0.10,"top":0.07})
+        self.take_another.bind(on_press = self.check)
+        self.add_widget(self.take_another)
+        toast(path)
+
+    def exit_manager(self, *args):
+        '''Called when the user reaches the root of the directory tree.'''
+
+        self.manager.dismiss()
+        self.remove_widget(self.filechooser)
+
     def open(self, path, filename):
         self.image.source = str(filename[0])
         self.add_widget(self.image)
@@ -342,7 +393,7 @@ class AnotherScreen(Screen,FloatLayout):
         self.take_another.bind(on_press = self.check)
         self.add_widget(self.take_another)
 
-class Main(App):
+class Main(MDApp):
     def build(self):
         loadingscreen.hide_loading_screen()
         request_permissions([
