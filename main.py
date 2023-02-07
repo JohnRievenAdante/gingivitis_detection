@@ -12,7 +12,7 @@ from kivy.core.window  import Window
 import time
 import cv2
 import numpy as np
-from PIL import Image
+from PIL import Image as impil
 from android import loadingscreen
 from android.permissions import request_permissions, Permission
 from kivymd.uix.filemanager import MDFileManager 
@@ -69,7 +69,7 @@ class MainScreen(Screen,FloatLayout):
         texture = self.cameraObject.texture
         size=texture.size
         pixels = texture.pixels
-        pil_image=Image.frombytes(mode='RGBA', size=size,data=pixels)
+        pil_image=impil.frombytes(mode='RGBA', size=size,data=pixels)
         numpypicture=np.array(pil_image)
         self.image.source = str(numpypicture)
         self.add_widget(self.image)
