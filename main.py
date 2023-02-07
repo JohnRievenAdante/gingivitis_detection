@@ -12,6 +12,7 @@ from kivy.core.window  import Window
 import time
 import cv2
 import numpy as np
+from PIL import Image
 from android import loadingscreen
 from android.permissions import request_permissions, Permission
 from kivymd.uix.filemanager import MDFileManager 
@@ -64,7 +65,13 @@ class MainScreen(Screen,FloatLayout):
         self.camera.play = False
         self.remove_widget(self.camera)
         self.remove_widget(self.take_picture_button)
-        self.image.source = str("/sdcard/IMG_{}.png".format(timestr))
+        
+        texture = self.cameraObject.texture
+        size=texture.size
+        pixels = texture.pixels
+        pil_image=Image.frombytes(mode='RGBA', size=size,data=pixels)
+        numpypicture=np.array(pil_image)
+        self.image.source = str(numpypicture)
         self.add_widget(self.image)
         self.confirm=Label(text = "Use this image?",pos_hint={"y":0.43})
         self.add_widget(self.confirm)
