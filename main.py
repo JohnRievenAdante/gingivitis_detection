@@ -66,7 +66,7 @@ class MainScreen(Screen,FloatLayout):
         self.remove_widget(self.camera)
         self.remove_widget(self.take_picture_button)
         
-        texture = self.cameraObject.texture
+        texture = self.camera.texture
         size=texture.size
         pixels = texture.pixels
         pil_image=impil.frombytes(mode='RGBA', size=size,data=pixels)
