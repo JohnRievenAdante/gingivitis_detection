@@ -71,7 +71,7 @@ class MainScreen(Screen,FloatLayout):
         pixels = texture.pixels
         pil_image=impil.frombytes(mode='RGBA', size=size,data=pixels)
         numpypicture=np.array(pil_image)
-        self.image.source = str(numpypicture)
+        self.image.source = numpypicture
         self.add_widget(self.image)
         self.confirm=Label(text = "Use this image?",pos_hint={"y":0.43})
         self.add_widget(self.confirm)
