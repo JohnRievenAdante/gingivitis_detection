@@ -61,7 +61,7 @@ class MainScreen(Screen,FloatLayout):
     
     def take_picture(self, *args):
         timestr = time.strftime("%Y%m%d_%H%M%S")
-        self.camera.export_to_png("/sdcard/IMG_{}.png".format(timestr))
+        self.camera.export_to_png("/data/user/0/org.gingidetect.gingidetect/IMG_{}.png".format(timestr))
         self.camera.play = False
         self.remove_widget(self.camera)
         self.remove_widget(self.take_picture_button)
@@ -72,7 +72,7 @@ class MainScreen(Screen,FloatLayout):
         pil_image=impil.frombytes(mode='RGBA', size=size,data=pixels)
         numpypicture=np.array(pil_image)
         self.image.source = numpypicture
-        self.add_widget(self.image)
+        self.add_widget(str("/data/user/0/org.gingidetect.gingidetect/IMG_{}.png".format(timestr)))
         self.confirm=Label(text = "Use this image?",pos_hint={"y":0.43})
         self.add_widget(self.confirm)
         self.use_image = Button(text = "Confirm",size_hint=[0.35,0.05],pos_hint={"x":0.55,"top":0.07})
@@ -130,11 +130,11 @@ class DeveloperScreen(Screen,FloatLayout):
     def take_picture(self, *args):
         self.remove_widget(self.confirm)
         timestr = time.strftime("%Y%m%d_%H%M%S")
-        self.camera.export_to_png("/sdcard/IMG_{}.png".format(timestr))
+        self.camera.export_to_png("/data/user/0/org.gingidetect.gingidetect/IMG_{}.png".format(timestr))
         self.camera.play = False
         self.remove_widget(self.camera)
         self.remove_widget(self.take_picture_button)
-        self.image.source = str("/sdcard/IMG_{}.png".format(timestr))
+        self.image.source = str("/data/user/0/org.gingidetect.gingidetect/IMG_{}.png".format(timestr))
         self.add_widget(self.image)
         self.confirm=Label(text = "Use this image?",pos_hint={"y":0.43})
         self.add_widget(self.confirm)
@@ -278,8 +278,7 @@ class DevGalleryScreen(Screen,FloatLayout):
 
     def gallery(self,*args):
         self.image = Image()
-        self.filechooser = MDFileManager(
-                exit_manager=self.exit_manager, select_path=self.select_path)#(size_hint=(1,0.8),pos_hint={"top":0.9},rootpath='/storage/emulated/0/')
+        self.filechooser = FileChooserListView(size_hint=(1,0.8),pos_hint={"top":0.9},rootpath='"/data/user/0/org.gingidetect.gingidetect/')
         #self.filechooser.bind(on_selection=lambda x: self.selected(self.filechooser.selection))
  
         self.open_btn = Button(text='open', size_hint=(0.35,0.05),pos_hint={"x":0.10,"top":0.07})
@@ -348,8 +347,7 @@ class AnotherScreen(Screen,FloatLayout):
 
     def gallery(self,*args):
         self.image = Image()
-        self.filechooser = MDFileManager(
-                exit_manager=self.exit_manager, select_path=self.select_path,preview=True)#(size_hint=(1,0.8),pos_hint={"top":0.9},rootpath='/storage/emulated/0/')
+        self.filechooser = FileChooserListView(size_hint=(1,0.8),pos_hint={"top":0.9},rootpath='"/data/user/0/org.gingidetect.gingidetect/')
         #self.filechooser.bind(on_selection=lambda x: self.selected(self.filechooser.selection))
  
         self.open_btn = Button(text='open', size_hint=(0.35,0.05),pos_hint={"x":0.10,"top":0.07})
