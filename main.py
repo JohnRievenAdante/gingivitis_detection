@@ -353,6 +353,7 @@ class AnotherScreen(Screen,FloatLayout):
         self.add_widget(self.back_to_main)
         #self.add_widget(self.filechooser)
         self.filechooser.show('/')
+        toast(self.filechooser)
         self.add_widget(self.open_btn)
 
     def select_path(self, path):
