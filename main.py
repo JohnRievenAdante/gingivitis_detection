@@ -17,7 +17,7 @@ from android.permissions import request_permissions, Permission
 from kivymd.uix.filemanager import MDFileManager 
 from kivy.graphics import Rotate, PushMatrix, PopMatrix
 from kivymd.toast import toast
-
+from kivy.uix.modalview import ModalView
 
 class MainScreen(Screen,FloatLayout):
     def __init__(self, **kwargs):
@@ -256,6 +256,8 @@ class DeveloperScreen(Screen,FloatLayout):
 class DevGalleryScreen(Screen,FloatLayout):
     def __init__(self, **kwargs):
         super(DevGalleryScreen,self).__init__(**kwargs)
+        self.manager_open = False
+        self.manager = None
         self.gallery()
 
     def switch_screen(self, *args):
@@ -326,8 +328,21 @@ class DevGalleryScreen(Screen,FloatLayout):
 class AnotherScreen(Screen,FloatLayout):
     def __init__(self, **kwargs):
         super(AnotherScreen,self).__init__(**kwargs)
-        self.gallery()
+        self.manager_open = False
+        self.manager = None
+        self.file_manager_open()
+        #self.gallery()
 
+    def file_manager_open(self):
+        if not self.manager:
+            self.manager = ModalView(size_hint=(1, 1), auto_dismiss=False)
+            self.file_manager = MDFileManager(
+                exit_manager=self.exit_manager, select_path=self.select_path)
+            self.manager.add_widget(self.file_manager)
+            self.file_manager.show('/')  # output manager to the screen
+        self.manager_open = True
+        self.manager.open()
+        
     def switch_screen(self, *args):
         self.manager.current = "main"
 
