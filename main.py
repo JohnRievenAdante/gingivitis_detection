@@ -278,11 +278,11 @@ class DevGalleryScreen(Screen,FloatLayout):
 
     def gallery(self,*args):
         self.image = Image()
-        self.filechooser = FileChooserListView(size_hint=(1,0.8),pos_hint={"top":0.9},rootpath='"/data/user/0/org.gingidetect.gingidetect/')
-        #self.filechooser.bind(on_selection=lambda x: self.selected(self.filechooser.selection))
+        self.filechooser = FileChooserListView(size_hint=(1,0.8),pos_hint={"top":0.9},rootpath='/data/user/0/org.gingidetect.gingidetect/')
+        self.filechooser.bind(on_selection=lambda x: self.selected(self.filechooser.selection))
  
         self.open_btn = Button(text='open', size_hint=(0.35,0.05),pos_hint={"x":0.10,"top":0.07})
-        #self.open_btn.bind(on_release=lambda x: self.open(self.filechooser.path, self.filechooser.selection))
+        self.open_btn.bind(on_release=lambda x: self.open(self.filechooser.path, self.filechooser.selection))
         self.back_to_main=Button(text='Back to main menu', size_hint=[0.35,0.05],pos_hint={"x":0.55,"top":0.07})
         self.back_to_main.bind(on_press=self.switch_screen)
 
@@ -347,17 +347,17 @@ class AnotherScreen(Screen,FloatLayout):
 
     def gallery(self,*args):
         self.image = Image()
-        self.filechooser = FileChooserListView(size_hint=(1,0.8),pos_hint={"top":0.9},rootpath='"/data/user/0/org.gingidetect.gingidetect/')
-        #self.filechooser.bind(on_selection=lambda x: self.selected(self.filechooser.selection))
+        self.filechooser = FileChooserListView(size_hint=(1,0.8),pos_hint={"top":0.9},rootpath='/data/user/0/org.gingidetect.gingidetect/')
+        self.filechooser.bind(on_selection=lambda x: self.selected(self.filechooser.selection))
  
         self.open_btn = Button(text='open', size_hint=(0.35,0.05),pos_hint={"x":0.10,"top":0.07})
-        #self.open_btn.bind(on_release=lambda x: self.open(self.filechooser.path, self.filechooser.selection))
+        self.open_btn.bind(on_release=lambda x: self.open(self.filechooser.path, self.filechooser.selection))
         self.back_to_main=Button(text='Back to main menu', size_hint=[0.35,0.05],pos_hint={"x":0.55,"top":0.07})
         self.back_to_main.bind(on_press=self.switch_screen)
 
         self.add_widget(self.back_to_main)
-        #self.add_widget(self.filechooser)
-        self.filechooser.show('/')
+        self.add_widget(self.filechooser)
+        #self.filechooser.show('/')
         toast(self.filechooser)
         self.add_widget(self.open_btn)
 
