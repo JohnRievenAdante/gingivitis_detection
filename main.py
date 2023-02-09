@@ -366,7 +366,11 @@ class AnotherScreen(Screen,FloatLayout):
         self.add_widget(self.open_btn)
 
     def select_path(self, path):
-        self.image.source = str(path[0])
+        #self.image.source = str(path[0])
+        ms = "/storage/emulated/0/DCIM/Screenshots/Screenshot_2023-02-09-20-08-13-569_org.adblockplus.browser.jpg"
+        bro=cv2.imread(ms)
+        cv2.imwrite('res1.jpg', bro)
+        self.image.source="res1.jpg"
         self.add_widget(self.image)
         self.confirm=Label(text = "Use this image?",pos_hint={"y":0.43})
         self.add_widget(self.confirm)
