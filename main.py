@@ -11,6 +11,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window  import Window
 import time
 import cv2
+from kivy import platform
 import numpy as np
 from PIL import Image as impil
 from android import loadingscreen
@@ -402,12 +403,10 @@ class AnotherScreen(Screen,FloatLayout):
 
 class Main(MDApp):
     def build(self):
-        loadingscreen.hide_loading_screen()
-        request_permissions([
-            Permission.CAMERA,
-            Permission.WRITE_EXTERNAL_STORAGE,
-            Permission.READ_EXTERNAL_STORAGE
-        ])
+        if platform == 'android':
+            from android.permissions import request_permissions, Permission
+            request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
+
         
         self.screen_manager = ScreenManager()
         self.main_screen = MainScreen(name="main")
