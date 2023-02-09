@@ -392,7 +392,11 @@ class AnotherScreen(Screen,FloatLayout):
         self.remove_widget(self.filechooser)
 
     def open(self, path, filename):
-        self.image.source = str(filename[0])
+        #self.image.source = str(filename[0])
+        ms = "/storage/emulated/0/DCIM/Screenshots/Screenshot_2023-02-09-20-08-13-569_org.adblockplus.browser.jpg"
+        bro=cv2.imread(ms)
+        cv2.imwrite('res1.jpg', bro)
+        self.image.source="res1.jpg"
         self.add_widget(self.image)
         self.confirm=Label(text = "Use this image?",pos_hint={"y":0.43})
         self.add_widget(self.confirm)
